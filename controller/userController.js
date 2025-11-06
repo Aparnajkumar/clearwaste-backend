@@ -52,3 +52,36 @@ exports.loginController = async (req, res) => {
 
 
 }
+//update user profile
+
+    exports.updateProfileController = async (req, res) => {
+        const userMail = req.payload
+        console.log(userMail);
+        const { username, email, password} = req.body
+        console.log(username, email, password);
+        try {
+            const updateProfile = await users.findOneAndUpdate({ email: userMail },
+                {
+                    username,
+                    email: userMail,
+                    password,
+                    
+                }, 
+            )
+            res.status(200).json(updateProfile)
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
+
+    //for getting all user data
+exports.getalluserController=async(req,res)=>{
+    const userMail=req.payload
+    try {
+      const getalluser=await users.find({email:{$ne:userMail}})  
+      console.log(getalluser)
+      res.status(200).json(getalluser)
+    } catch (error) {
+     res.status(500).json(error)   
+    }
+}
