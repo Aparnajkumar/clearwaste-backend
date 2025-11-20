@@ -85,3 +85,14 @@ exports.getalluserController=async(req,res)=>{
      res.status(500).json(error)   
     }
 }
+
+//delete user
+exports.deleteuserController=async(req,res)=>{
+    const { id } = req.params
+    try {
+       await users.findByIdAndDelete({_id:id})
+       res.status(200).json("Removed user") 
+    } catch (error) {
+       res.status(500).json(error) 
+    }
+}

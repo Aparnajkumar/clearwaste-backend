@@ -1,9 +1,10 @@
 //import express
 const express=require("express")
-const { registerController, loginController, updateProfileController, getalluserController } = require("./controller/userController")
-const { bookpickupController, ubookinghistoryController, getallhistoryController, updateBookingStatus, paymentcontroller } = require("./controller/bookingController")
+const { registerController, loginController, updateProfileController, getalluserController, deleteuserController } = require("./controller/userController")
+const { bookpickupController, ubookinghistoryController, getallhistoryController, updateBookingStatus, paymentcontroller, deleteabookingController } = require("./controller/bookingController")
 const jwtMiddleware = require("./middleware/jwtMiddleware")
 const adminjwtMiddleware = require("./middleware/adminjwtMiddleware")
+const { deleteOne } = require("./model/userModel")
 
 
 
@@ -40,6 +41,12 @@ routes.get("/all-user",adminjwtMiddleware,getalluserController)
 
 //update booking status
 routes.put("/updatebookingstatus/:id",adminjwtMiddleware,updateBookingStatus)
+
+//delete user
+routes.delete("/deleteuser/:id",deleteuserController)
+
+//delete booking
+routes.delete("/deletebooking/:id",deleteabookingController)
 
  //export
  module.exports=routes

@@ -1,5 +1,6 @@
 const bookings = require("../model/bookingModel");
 const jwt = require("jsonwebtoken")
+require("dotenv").config
 const stripe = require('stripe')(process.env.STRIPESECRETKEY);
 
 
@@ -66,6 +67,8 @@ exports.updateBookingStatus = async (req, res) => {
 };
 //payment
 exports.paymentcontroller = async (req, res) => {
+    console.log(`Inside payment controller`);
+    
     const email = req.payload
     console.log(email);
 
@@ -111,16 +114,17 @@ exports.paymentcontroller = async (req, res) => {
                         password: bookingdetails.password,
                         status: bookingdetails.status,
                         userMail: bookingdetails.userMail,
-                        pstatus: "Payed",
+                        pstatus: "Paid",
                         paidby: email
 
 
                     },
                 },
-                unit_amount: Math.round(bookingdetails.amount * 0.12),//cent purchase amount
+                unit_amount: Math.round(bookingdetails.amount * 10),//cent purchase amount
             },
             quantity: 1
         }]
+console.log("Stripe key:", process.env.STRIPE_SECRET_KEY)
 
         //create checkout session for stripe
         const session = await stripe.checkout.sessions.create({
@@ -139,6 +143,21 @@ exports.paymentcontroller = async (req, res) => {
 
 
 }
+
+//delete a booking
+exports.deleteabookingController=async(req,res)=>{
+    const {id}=req.params
+    try {
+        await bookings.findByIdAndDelete({_id:id})
+        res.status(200).json("Removed the booking")
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
+
+
+
 
 
 
