@@ -131,8 +131,8 @@ console.log("Stripe key:", process.env.STRIPE_SECRET_KEY)
             payment_method_types: ["card"],
             line_items: line_item,
             mode: 'payment',
-            success_url: `http://localhost:5173/confirmation`,
-            cancel_url: `http://localhost:5173/payment`
+            success_url: `http://clearwaste-frontend.vercel.app/confirmation`,
+            cancel_url: `http://clearwaste-frontend.vercel.app/payment`
         })
         console.log(session);
         // res.status(200).json({sessionId:session.id})
