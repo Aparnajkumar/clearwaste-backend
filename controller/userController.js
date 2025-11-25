@@ -96,3 +96,32 @@ exports.deleteuserController=async(req,res)=>{
        res.status(500).json(error) 
     }
 }
+
+//google login contoller
+exports.googleloginController = async (req, res) => {
+    console.log(`Inside google login controller`);
+    const { username, password, profile, email } = req.body
+    console.log(username, password, profile, email);
+
+    try {
+        const existingUser = await users.findOne({ email })
+        if (existingUser) {
+            
+                const token = jwt.sign({ userMail: existingUser.email }, process.env.secretkey)
+                res.status(200).json({ existingUser, token })
+            } else {
+                const newUser = new users({
+                    username,
+                    email,
+                    password,
+                    profile
+                })
+                await newUser.save()
+                const token = jwt.sign({ userMail: existingUser.email }, process.env.secretkey)
+                res.status(200).json({ existingUser: newUser, token })
+            }
+        } 
+        catch (error) {
+            res.status(500).json(error)
+        }
+    }
