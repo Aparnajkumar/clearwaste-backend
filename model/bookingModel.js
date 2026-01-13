@@ -35,28 +35,41 @@ const bookingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-        amount: {
+    amount: {
         type: Number,
         required: true
     },
-            weight: {
+    weight: {
         type: Number,
         required: true
     },
-      status: {
-    type: String,
-    default: "Pending",
-    
-  },
-  paidby:{
-    type:String,
-    default:""
-  },
-  pstatus: {
-    type: String,
-    default: "Pending",
+    status: {
+        type: String,
+        default: "Pending",
+
+    },
+    paidby: {
+        type: String,
+        default: ""
+    },
+    pstatus: {
+        type: String,
+        default: "Pending",
+    },
+    location: {
+        latitude: Number,
+        longitude: Number
+    },
+    employeeLocation: {
+  latitude: Number,
+  longitude: Number,
+  updatedAt: {
+    type: Date,
+    default: Date.now
   }
-    
+}
+
+
 })
 const bookings = mongoose.model("bookings", bookingSchema)
 module.exports = bookings

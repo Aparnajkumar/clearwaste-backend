@@ -1,3 +1,4 @@
+const rates = require("../model/adminModel");
 const users = require("../model/userModel");
 const jwt = require("jsonwebtoken")
 //register
@@ -79,7 +80,7 @@ exports.getalluserController=async(req,res)=>{
     const userMail=req.payload
     try {
       const getalluser=await users.find({email:{$ne:userMail}})  
-      console.log(getalluser)
+    //   console.log(getalluser)
       res.status(200).json(getalluser)
     } catch (error) {
      res.status(500).json(error)   
@@ -125,3 +126,15 @@ exports.googleloginController = async (req, res) => {
             res.status(500).json(error)
         }
     }
+
+    //for getting rate of wastetye
+exports.getrateController=async(req,res)=>{
+    try {
+      const getrate =await rates.find()  
+    //   console.log(getalluser)
+      res.status(200).json(getrate)
+    } catch (error) {
+     res.status(500).json(error)   
+    }
+}
+

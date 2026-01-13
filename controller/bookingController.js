@@ -7,12 +7,12 @@ const stripe = require('stripe')(process.env.STRIPESECRETKEY);
 //for booking a pickup
 exports.bookpickupController = async (req, res) => {
     console.log(`Inside pickup controller`);
-    const { wastetype, time, address, username, date, instructions, password, amount, weight } = req.body
+    const { wastetype, time, address, username, date, instructions, password, amount, weight,location } = req.body
     const userMail = req.payload;
     console.log(wastetype, time, address, username, date, instructions, password, amount, weight);
     try {
         const newbookpickup = new bookings({
-            wastetype, time, address, username, date, instructions, userMail, password, amount, weight
+            wastetype, time, address, username, date, instructions, userMail, password, amount, weight,location
         })
 
         await newbookpickup.save()
@@ -88,7 +88,7 @@ exports.paymentcontroller = async (req, res) => {
             password: bookingdetails.password,
             status: bookingdetails.status,
             userMail: bookingdetails.userMail,
-            pstatus: "Payed",
+            pstatus: "Paid",
             paidby: email
 
         }, { new: true })
